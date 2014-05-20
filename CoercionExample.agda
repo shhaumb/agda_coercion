@@ -62,7 +62,7 @@ _ == _ = False  -- otherwise
 {- creating a subtype of Nat that also contains the parity of
    the number as information in it's type -}
 data NatP : Parity → Set where
-  conP : (n : Nat) → NatP (parity n)
+  conP : (n : Nat) → NatP (parity' n)
 
 {- conP 5 : NatP odd
    conP 8 : NatP even
@@ -98,7 +98,7 @@ natPoddCoercion = coerce convertNatPtoNat
 -- type refinement
 
 -- let's define a type similar to (NatP even) using type refinement
-EvenNat = Nat & (λ x → parity x == even)
+EvenNat = Nat & (λ x → parity' x == even)
 
 -- define coercion instance from EvenNat to Nat
 natEvenCoercion : EvenNat ≤ Nat
@@ -113,7 +113,7 @@ m = # 6
 -}
 
 -- similarly for odd natural numbers
-OddNat = Nat & (λ x → parity x == odd)
+OddNat = Nat & (λ x → parity' x == odd)
 
 natOddCoercion : OddNat ≤ Nat
 natOddCoercion = refinementCoercion
@@ -133,7 +133,7 @@ f1 _ = 0
 
 
 -- 2nd method
-f2 : (n : Nat) → {{k : (parity n) == even}} → Nat
+f2 : (n : Nat) → {{k : (parity' n) == even}} → Nat
 f2 _ = 0
 
 {-
